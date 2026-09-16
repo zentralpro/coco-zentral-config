@@ -30,6 +30,15 @@ resource "zentral_mdm_blueprint_artifact" "arte" {
 
 # Buffet
 
+resource "zentral_mdm_blueprint_artifact" "mobile-buffet" {
+  blueprint_id       = zentral_mdm_blueprint.mobile.id
+  artifact_id        = zentral_mdm_artifact.buffet.id
+  ios                = true
+  ios_min_version    = "26"
+  ipados             = true
+  ipados_min_version = "26"
+}
+
 resource "zentral_mdm_artifact" "buffet" {
   name      = "Buffet - App"
   type      = "Configuration"
