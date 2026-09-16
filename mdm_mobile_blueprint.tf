@@ -30,6 +30,34 @@ resource "zentral_mdm_blueprint_artifact" "arte" {
 
 # Buffet
 
+resource "zentral_mdm_artifact" "buffet" {
+  name      = "Buffet - App"
+  type      = "Configuration"
+  channel   = "Device"
+  platforms = ["iOS", "iPadOS"]
+}
+
+resource "zentral_mdm_declaration" "buffet-1" {
+  artifact_id = zentral_mdm_artifact.buffet.id
+  source = jsonencode({
+    Type        = "com.apple.configuration.app.managed",
+    Identifier  = "com.zentral.buffet",
+    ServerToken = "ad71c059-179f-4ecd-980a-5a55ff30ca3a",
+    Payload = {
+      BundleID = "com.zentral.buffet"
+      AppConfig = {
+        AppConfigDictionary = {
+          DataAssetReference = "ztl:${zentral_mdm_artifact.buffet-config-dict.id}"
+        }
+      }
+    }
+  })
+  ios     = true
+  ipados  = true
+  version = 1
+}
+
+
 resource "zentral_mdm_artifact" "buffet-config-dict" {
   name      = "Buffet - Config Dict"
   type      = "Data Asset"
