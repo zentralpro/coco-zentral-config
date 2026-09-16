@@ -167,3 +167,70 @@ resource "zentral_mdm_profile" "system-logging-1" {
   macos       = true
   version     = 1
 }
+
+
+# mobile apps
+
+
+resource "zentral_mdm_artifact" "slack" {
+  name      = "Slack mobile app (required)"
+  type      = "Configuration"
+  channel   = "Device"
+  platforms = ["iOS", "iPadOS"]
+}
+
+resource "zentral_mdm_declaration" "slack-1" {
+  artifact_id = zentral_mdm_artifact.slack.id
+  source = jsonencode({
+    Type        = "com.apple.configuration.app.managed",
+    Identifier  = "cloud.zentral.petit-coco.configuration.slack",
+    ServerToken = "1324DEB8-38C5-4792-9E77-805D97000FED",
+    Payload = {
+      AppStoreID = "618783545"
+      UpdateBehavior = {
+        AutomaticAppUpdates = "AlwaysOn"
+      }
+      InstallBehavior = {
+        Install = "Required"
+        License = {
+          Assignment = "Device"
+        }
+      }
+    }
+  })
+  ios     = true
+  ipados  = true
+  version = 1
+}
+
+
+resource "zentral_mdm_artifact" "arte" {
+  name      = "Arte iOS app (optional)"
+  type      = "Configuration"
+  channel   = "Device"
+  platforms = ["iOS", "iPadOS"]
+}
+
+resource "zentral_mdm_declaration" "arte-1" {
+  artifact_id = zentral_mdm_artifact.arte.id
+  source = jsonencode({
+    Type        = "com.apple.configuration.app.managed",
+    Identifier  = "cloud.zentral.petit-coco.configuration.arte",
+    ServerToken = "FCE25E9E-8BD6-4513-94B3-CC80FF8C1238",
+    Payload = {
+      AppStoreID = "405028510"
+      UpdateBehavior = {
+        AutomaticAppUpdates = "AlwaysOn"
+      }
+      InstallBehavior = {
+        Install = "Optional"
+        License = {
+          Assignment = "Device"
+        }
+      }
+    }
+  })
+  ios     = true
+  ipados  = true
+  version = 1
+}
