@@ -78,13 +78,14 @@ resource "zentral_mdm_data_asset" "buffet-config-dict-1" {
   artifact_id = zentral_mdm_artifact.buffet-config-dict.id
   type        = "PLIST"
   source = base64encode(<<-EOT
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>about</key>
     <dict>
-      <key>about</key>
-      <dict>
-        <key>markdown</key>
-        <string># Acme Software Catalog
+      <key>markdown</key>
+      <string># Acme Software Catalog
 
 Apps on this list are approved and paid for by Acme IT. Installing from here keeps
 your device compliant — apps installed from elsewhere are **not** supported and may
@@ -133,6 +134,7 @@ Acme IT · Catalog policy `v2.4` · Updated August 2026
       </string>
     </dict>
   </dict>
+</plist>
   EOT
   )
   ios     = true
